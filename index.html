@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Levels Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="main">
+        <button id="startButton" class="mainButton">Start</button>
+        <button id="customizeButton" class="mainButton">Customize</button>
+
+        <div id="levels" style="display: none;">
+            <div class="header">
+                <button id="resetLevelsButton" class="resetButton">Reset Levels</button>
+            </div>
+            <button class="levelButton green" data-level="1">Level 1</button>
+            <button class="levelButton green" data-level="2">Level 2</button>
+            <button class="levelButton green" data-level="3">Level 3</button>
+        </div>
+        <div id="rooms" style="display: none;">
+            <div class="header">
+                <button id="backToLevelsButton">Back to Levels</button>
+                <button id="resetRoomsButton" class="resetButton">Reset Rooms</button>
+            </div>
+            <div id="roomsContainer"></div>
+        </div>
+        <div id="levelContent" style="display: none;">
+            <div class="header">
+                <button id="backButton">Back to Rooms</button>
+                <button id="resetRoomButton" class="resetButton">Reset Room</button>
+            </div>
+            <div id="levelButtonsContainer" class="level-content"></div>
+        </div>
+
+		<!-- Customization Modal -->
+		<div id="customizationModal" class="modal">
+			<div class="modal-content">
+				<span class="close-button">&times;</span>
+				<h2>Customize Levels and Rooms</h2>
+				<div id="customizationOptions">
+					<!-- Customization options will be dynamically added here -->
+					<button id="addLevelButton" class="mainButton">Add Level</button>
+				</div>
+				<button id="saveCustomizationButton" class="mainButton">Save</button>
+			</div>
+		</div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

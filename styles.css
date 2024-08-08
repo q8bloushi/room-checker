@@ -1,0 +1,148 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+    text-align: center;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+}
+
+.mainButton {
+    padding: 15px 30px;
+    font-size: 18px;
+    margin: 20px;
+    border-radius: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#levels, #rooms, #levelContent {
+    position: relative;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.resetButton {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: orange;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#levels, #rooms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.levelButton, .roomButton, .level-content button, #backButton, #backToLevelsButton {
+    margin: 10px;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    width: 150px;
+}
+
+#backButton, #backToLevelsButton {
+    display: block;
+    margin: 20px auto;
+}
+
+.levelButton.green, .roomButton.green {
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.levelButton.red, .roomButton.red {
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.level-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.level-content button {
+    width: 60px;
+    height: 60px;
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+.level-content button.red {
+    background-color: red;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
