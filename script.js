@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetRoomButton = document.getElementById('resetRoomButton');
 
     const saveCodeContainer = document.getElementById('saveCodeContainer');
+	
+	//const levelsPage = document.getElementById('levels');
+	//const startPage = document.getElementById('startPage');
+	const backToStartButton = document.getElementById('backToStartButton');
 
     // Manual Code Transfer Elements
     const generateSaveCodeButton = document.getElementById('generateSaveCodeButton');
@@ -35,6 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveLevelRooms() {
         localStorage.setItem('levelRooms', JSON.stringify(levelRooms));
     }
+	
+	// Adding event listener to "Back to Start" button
+	backToStartButton.addEventListener('click', () => {
+		//levelsPage.style.display = 'none';
+		//startPage.style.display = 'block';
+	
+	    startButton.style.display = '';
+        customizeButton.style.display = '';
+        levelsDiv.style.display = 'none';
+        saveCodeContainer.style.display = 'block';  // show save code elements
+	});
 
     startButton.addEventListener('click', () => {
         startButton.style.display = 'none';
@@ -170,6 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         checkLevelCompletion(level);
     }
+	
+
 
     function checkLevelCompletion(level) {
         const roomButtons = Array.from(document.querySelectorAll(`.roomButton[data-level="${level}"]`));

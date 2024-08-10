@@ -54,7 +54,7 @@ body {
     align-items: center;
 }
 
-.levelButton, .roomButton, .level-content button, #backButton, #backToLevelsButton {
+.levelButton, .roomButton, .level-content button, #backButton, #backToLevelsButton, #backToStartButton{
     margin: 10px;
     padding: 15px;
     font-size: 18px;
@@ -62,7 +62,7 @@ body {
     width: 150px;
 }
 
-#backButton, #backToLevelsButton {
+#backButton, #backToLevelsButton, #backToStartButton {
     display: block;
     margin: 20px auto;
 }
