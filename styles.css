@@ -146,3 +146,77 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+#saveCodeContainer {
+    display: none; /* Initially hidden */
+    /* Add any other styling as needed */
+}
+
+#saveCodeOutput {
+    display: block; /* Ensure it's not hidden by default */
+    white-space: pre-wrap; /* To maintain line breaks and formatting */
+}
+
+
+/* Add to your styles.css file or within a <style> tag */
+
+#saveCodeContainer {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#saveCodeContainer button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#saveCodeContainer button:hover {
+    background-color: #0056b3;
+}
+
+#saveCodeOutput {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+    overflow: auto;
+    background-color: #fff;
+}
+
+#saveCodeInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#saveCodeContainer input, 
+#saveCodeContainer textarea {
+    box-sizing: border-box;
+}
+
+#saveCodeContainer button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+

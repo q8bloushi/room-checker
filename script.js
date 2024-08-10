@@ -17,6 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetRoomsButton = document.getElementById('resetRoomsButton');
     const resetRoomButton = document.getElementById('resetRoomButton');
 
+    const saveCodeContainer = document.getElementById('saveCodeContainer');
+
+    // Manual Code Transfer Elements
+    const generateSaveCodeButton = document.getElementById('generateSaveCodeButton');
+    const saveCodeOutput = document.getElementById('saveCodeOutput');
+    const copySaveCodeButton = document.getElementById('copySaveCodeButton');
+    const saveCodeInput = document.getElementById('saveCodeInput');
+    const loadSaveCodeButton = document.getElementById('loadSaveCodeButton');
+
     let levelRooms = JSON.parse(localStorage.getItem('levelRooms')) || {
         1: [30, 6, 7, 6, 3, 3, 30, 45],
         2: [5, 5, 5, 5, 5, 30],
@@ -31,12 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.style.display = 'none';
         customizeButton.style.display = 'none';
         levelsDiv.style.display = 'block';
+        saveCodeContainer.style.display = 'none';  // Hide save code elements
     });
 
     customizeButton.addEventListener('click', () => {
         customizationModal.style.display = 'block';
         loadCustomizationOptions();
+        saveCodeContainer.style.display = 'block';  // Show save code elements
     });
+	
+	saveCodeContainer.style.display = 'block'; 
 
     closeButton.addEventListener('click', () => {
         customizationModal.style.display = 'none';
@@ -169,36 +182,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-function resetLevels() {
-    Object.keys(levelRooms).forEach(level => {
-        // Reset room button colors to green
-        Array.from(document.querySelectorAll(`.roomButton[data-level="${level}"]`)).forEach(button => {
-            button.classList.remove('red');
-            button.classList.add('green');
-            localStorage.removeItem(`level-${level}-room-${button.dataset.room}-color`);
-            resetRoomButtons(level, button.dataset.room);
-        });
+    function resetLevels() {
+        Object.keys(levelRooms).forEach(level => {
+            // Reset room button colors to green
+            Array.from(document.querySelectorAll(`.roomButton[data-level="${level}"]`)).forEach(button => {
+                button.classList.remove('red');
+                button.classList.add('green');
+                localStorage.removeItem(`level-${level}-room-${button.dataset.room}-color`);
+                resetRoomButtons(level, button.dataset.room);
+            });
 
-        // Reset level color to green
-        const levelButton = document.querySelector(`.levelButton[data-level="${level}"]`);
-        if (levelButton) {
-            levelButton.classList.remove('red');
-            levelButton.classList.add('green');
-            localStorage.removeItem(`level-${level}-color`);
-        }
-    });
-}
+            // Reset level color to green
+            const levelButton = document.querySelector(`.levelButton[data-level="${level}"]`);
+            if (levelButton) {
+                levelButton.classList.remove('red');
+                levelButton.classList.add('green');
+                localStorage.removeItem(`level-${level}-color`);
+            }
+        });
+    }
 
     function resetRooms() {
         const level = getCurrentLevel();
         if (level) {
             levelRooms[level].forEach((numButtons, index) => {
-                Array.from(document.querySelectorAll(`.roomButton[data-level="${level}"][data-room="${index + 1}"]`)).forEach(button => {
-                    button.classList.remove('red');
-                    button.classList.add('green');
-                    localStorage.removeItem(`level-${level}-room-${button.dataset.room}-color`);
-                    resetRoomButtons(level, button.dataset.room);
-                });
+                // Reset the room color and buttons
+                resetRoomButtons(level, index + 1);
+
+                const roomButton = document.querySelector(`.roomButton[data-level="${level}"][data-room="${index + 1}"]`);
+                if (roomButton) {
+                    roomButton.classList.remove('red');
+                    roomButton.classList.add('green');
+                    localStorage.removeItem(`level-${level}-room-${index + 1}-color`);
+                }
             });
         }
     }
@@ -217,71 +233,131 @@ function resetLevels() {
         }
     }
 
-    function resetRoomButtons(level, room) {
-        Array.from(levelButtonsContainer.children).forEach(button => {
-            button.classList.remove('red');
-            button.classList.add('green');
-            localStorage.removeItem(`level-${level}-room-${room}-button-${button.textContent}`);
-        });
-    }
+	function resetRoomButtons(level, room) {
+		// Reset the buttons in the room based on the saved levelRooms structure
+		for (let i = 1; i <= levelRooms[level][room - 1]; i++) {
+			const button = document.querySelector(`#levelButtonsContainer button:nth-child(${i})`);
+			if (button) {
+				button.classList.remove('red');
+				button.classList.add('green');
+			}
+			localStorage.removeItem(`level-${level}-room-${room}-button-${i}`);
+		}
+	}
+
 
     function getCurrentLevel() {
-        if (levelsDiv.style.display === 'block') return null;
-        if (roomsDiv.style.display === 'block') return Array.from(document.querySelectorAll('.roomButton')).map(b => b.dataset.level)[0];
-        if (levelContentDiv.style.display === 'block') return levelButtonsContainer.dataset.level;
-        return null;
+        return levelButtonsContainer.dataset.level;
     }
 
     function getCurrentRoom() {
-        if (levelContentDiv.style.display === 'block') return levelButtonsContainer.dataset.room;
-        return null;
+        return levelButtonsContainer.dataset.room;
     }
 
-    function loadCustomizationOptions() {
-        const customizationOptions = document.getElementById('customizationOptions');
-        customizationOptions.innerHTML = '';
-        Object.keys(levelRooms).forEach(level => {
-            const levelDiv = document.createElement('div');
-            levelDiv.classList.add('customizationLevel');
-            levelDiv.innerHTML = `<strong>Level ${level}</strong>`;
-            levelRooms[level].forEach((room, index) => {
-                const roomDiv = document.createElement('div');
-                roomDiv.classList.add('customizationRoom');
-                roomDiv.innerHTML = `Room ${index + 1}: <input type="number" min="1" max="100" value="${room}" data-level="${level}" data-room="${index + 1}" />`;
-                const deleteRoomButton = document.createElement('button');
-                deleteRoomButton.textContent = 'Delete Room';
-                deleteRoomButton.addEventListener('click', () => {
-                    levelRooms[level].splice(index, 1);
-                    loadCustomizationOptions();
+function loadCustomizationOptions() {
+    const customizationOptions = document.getElementById('customizationOptions');
+    customizationOptions.innerHTML = '';
+    Object.keys(levelRooms).forEach(level => {
+        const levelDiv = document.createElement('div');
+        levelDiv.classList.add('customizationLevel');
+        levelDiv.innerHTML = `<strong>Level ${level}</strong>`;
+        levelRooms[level].forEach((room, index) => {
+            const roomDiv = document.createElement('div');
+            roomDiv.classList.add('customizationRoom');
+            roomDiv.innerHTML = `Room ${index + 1}: <input type="number" class="room-input" min="1" max="100" value="${room}" data-level="${level}" data-room="${index + 1}" />`;
+            const deleteRoomButton = document.createElement('button');
+            deleteRoomButton.textContent = 'Delete Room';
+            deleteRoomButton.addEventListener('click', () => {
+                levelRooms[level].splice(index, 1);
+                loadCustomizationOptions();
+            });
+            roomDiv.appendChild(deleteRoomButton);
+            levelDiv.appendChild(roomDiv);
+        });
+        const addRoomButton = document.createElement('button');
+        addRoomButton.textContent = 'Add Room';
+        addRoomButton.addEventListener('click', () => {
+            levelRooms[level].push(1); // Default to 1 button in the new room
+            loadCustomizationOptions();
+        });
+        levelDiv.appendChild(addRoomButton);
+        const deleteLevelButton = document.createElement('button');
+        deleteLevelButton.textContent = 'Delete Level';
+        deleteLevelButton.addEventListener('click', () => {
+            delete levelRooms[level];
+            loadCustomizationOptions();
+        });
+        levelDiv.appendChild(deleteLevelButton);
+        customizationOptions.appendChild(levelDiv);
+    });
+}
+
+
+	function saveCustomization() {
+		document.querySelectorAll('.room-input').forEach(input => {
+			const level = input.dataset.level;
+			const room = input.dataset.room;
+			const numButtons = parseInt(input.value, 10);
+			if (levelRooms[level]) {
+				levelRooms[level][room - 1] = numButtons;
+			}
+		});
+	}
+
+
+    // Manual Code Transfer Functionality
+    generateSaveCodeButton.addEventListener('click', () => {
+        const saveData = {
+            levelRooms: levelRooms,
+            colors: {}
+        };
+		Object.keys(levelRooms).forEach(level => {
+			saveData.colors[level] = {
+				levelColor: localStorage.getItem(`level-${level}-color`) || 'green',
+				rooms: {}
+			};
+			levelRooms[level].forEach((_, roomIndex) => {
+				saveData.colors[level].rooms[roomIndex + 1] = {
+					roomColor: localStorage.getItem(`level-${level}-room-${roomIndex + 1}-color`) || 'green',
+					buttons: {}
+				};
+				for (let i = 1; i <= levelRooms[level][roomIndex]; i++) {
+					saveData.colors[level].rooms[roomIndex + 1].buttons[i] = localStorage.getItem(`level-${level}-room-${roomIndex + 1}-button-${i}`) || 'green';
+				}
+			});
+		});
+		const saveCode = btoa(JSON.stringify(saveData));
+		saveCodeOutput.textContent = saveCode;  // Use textContent instead of value
+	});
+	copySaveCodeButton.addEventListener('click', () => {
+		saveCodeOutput.select(); // Select the text in the textarea
+		document.execCommand('copy'); // Copy the selected text to clipboard
+		alert('Save code copied to clipboard!');
+	})
+
+    loadSaveCodeButton.addEventListener('click', () => {
+        const saveCode = saveCodeInput.value;
+        try {
+            const saveData = JSON.parse(atob(saveCode));
+            levelRooms = saveData.levelRooms;
+            Object.keys(saveData.colors).forEach(level => {
+                const levelColor = saveData.colors[level].levelColor;
+                localStorage.setItem(`level-${level}-color`, levelColor);
+
+                Object.keys(saveData.colors[level].rooms).forEach(room => {
+                    const roomColor = saveData.colors[level].rooms[room].roomColor;
+                    localStorage.setItem(`level-${level}-room-${room}-color`, roomColor);
+
+                    Object.keys(saveData.colors[level].rooms[room].buttons).forEach(button => {
+                        const buttonColor = saveData.colors[level].rooms[room].buttons[button];
+                        localStorage.setItem(`level-${level}-room-${room}-button-${button}`, buttonColor);
+                    });
                 });
-                roomDiv.appendChild(deleteRoomButton);
-                levelDiv.appendChild(roomDiv);
             });
-            const addRoomButton = document.createElement('button');
-            addRoomButton.textContent = 'Add Room';
-            addRoomButton.addEventListener('click', () => {
-                levelRooms[level].push(1); // Default to 1 button in the new room
-                loadCustomizationOptions();
-            });
-            levelDiv.appendChild(addRoomButton);
-            const deleteLevelButton = document.createElement('button');
-            deleteLevelButton.textContent = 'Delete Level';
-            deleteLevelButton.addEventListener('click', () => {
-                delete levelRooms[level];
-                loadCustomizationOptions();
-            });
-            levelDiv.appendChild(deleteLevelButton);
-            customizationOptions.appendChild(levelDiv);
-        });
-    }
-
-    function saveCustomization() {
-        const inputs = document.querySelectorAll('#customizationOptions input');
-        inputs.forEach(input => {
-            const level = input.getAttribute('data-level');
-            const room = input.getAttribute('data-room');
-            const numButtons = parseInt(input.value, 10);
-            levelRooms[level][room - 1] = numButtons;
-        });
-    }
+            saveLevelRooms();
+            alert('Save data loaded successfully!');
+        } catch (error) {
+            alert('Invalid save code!');
+        }
+    });
 });

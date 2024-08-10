@@ -11,6 +11,15 @@
         <button id="startButton" class="mainButton">Start</button>
         <button id="customizeButton" class="mainButton">Customize</button>
 
+        <!-- Manual Code Transfer Section -->
+		<div id="saveCodeContainer" style="display: none;">
+			<button id="generateSaveCodeButton">Generate Save Code</button>
+			<textarea id="saveCodeOutput" readonly></textarea>
+			<button id="copySaveCodeButton">Copy Save Code</button>
+			<input type="text" id="saveCodeInput" placeholder="Enter Save Code" />
+			<button id="loadSaveCodeButton">Load Save Code</button>
+		</div>
+
         <div id="levels" style="display: none;">
             <div class="header">
                 <button id="resetLevelsButton" class="resetButton">Reset Levels</button>
@@ -34,18 +43,18 @@
             <div id="levelButtonsContainer" class="level-content"></div>
         </div>
 
-		<!-- Customization Modal -->
-		<div id="customizationModal" class="modal">
-			<div class="modal-content">
-				<span class="close-button">&times;</span>
-				<h2>Customize Levels and Rooms</h2>
-				<div id="customizationOptions">
-					<!-- Customization options will be dynamically added here -->
-					<button id="addLevelButton" class="mainButton">Add Level</button>
-				</div>
-				<button id="saveCustomizationButton" class="mainButton">Save</button>
-			</div>
-		</div>
+        <!-- Customization Modal -->
+        <div id="customizationModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Customize Levels and Rooms</h2>
+                <div id="customizationOptions">
+                    <!-- Customization options will be dynamically added here -->
+                    <button id="addLevelButton" class="mainButton">Add Level</button>
+                </div>
+                <button id="saveCustomizationButton" class="mainButton">Save</button>
+            </div>
+        </div>
 
     </div>
     <script src="script.js"></script>
