@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadSaveCodeButton = document.getElementById('loadSaveCodeButton');
 
     let levelRooms = JSON.parse(localStorage.getItem('levelRooms')) || {
-        1: [30, 6, 7, 6, 3, 3, 30, 45],
-        2: [5, 5, 5, 5, 5, 30],
+        1: [5, 5],
+        2: [21, 21, 16, 5],
         3: []
     };
 
