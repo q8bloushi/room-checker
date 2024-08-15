@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let levelRooms = JSON.parse(localStorage.getItem('levelRooms')) || {
         1: [5, 5],
         2: [21, 21, 16, 5],
-        3: []
+        3: [80,20,20,20,15,4,4,5,4]
     };
 
     function saveLevelRooms() {
