@@ -18,3 +18,6 @@ Use `git clone https://github.com/q8bloushi/room-checker.git`
 or
 
 Download the APK file for Andriod version by [clicking here](https://drive.google.com/uc?export=download&id=1-jG0-bY3zZOB0RpSdePwTZNzKYgYoqUa)
+
+## Demo
+For a demo version please visit [Room Checker](https://room-checker.onrender.com/)
