@@ -8,4 +8,4 @@
 A room checker app is a tool for verifying room availability and occupancy status in hotels or rental properties
 
 ### Features
-- ##[Secure Save Point Retrieval]: Load saved progress with enhanced security through 64-bit encryption, ensuring your data remains private and protected.
+- <b>Secure Save Point Retrieval:</b> Load saved progress with enhanced security through 64-bit encryption, ensuring your data remains private and protected.
