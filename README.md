@@ -11,3 +11,10 @@ A room checker app is a tool for verifying room availability and occupancy statu
 - <b>Secure Save Point Retrieval:</b> Load saved progress with enhanced security through 64-bit encryption, ensuring your data remains private and protected.
 - <b>Dynamic Room Management:</b> Easily add or delete individual rooms or entire levels, allowing for flexible customization of your space as needed.
 - <b>One-Click Reset:</b> Instantly restore the app to its original state with a single reset button, simplifying the process of clearing all rooms and starting fresh.
+
+## Installation
+Use `git clone https://github.com/q8bloushi/room-checker.git`
+
+or
+
+Download the APK file for Andriod version by [clicking here](https://drive.google.com/uc?export=download&id=1-jG0-bY3zZOB0RpSdePwTZNzKYgYoqUa)
